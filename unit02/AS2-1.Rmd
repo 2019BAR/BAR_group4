@@ -8,8 +8,6 @@ output:
     theme: flatly
     css: ../style.css
 ---
-
-
 <hr>
 基本的程式筆記設定，安裝、載入一些基本的套件
 ```{r results='hide', message=FALSE, warning=FALSE}
