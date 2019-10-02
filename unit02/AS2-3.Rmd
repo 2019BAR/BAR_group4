@@ -141,21 +141,21 @@ tapply(is.na(A$Married), A$Citizenship, mean)
 
 __§ 2.3__ How many states had all interviewees living in a non-metropolitan area (aka they have a missing MetroAreaCode value)? For this question, treat the District of Columbia as a state (even though it is not technically a state).
 ```{r}
-#Columbia、New Jersey、Rhode Island
+#Alaska、Wyoming 
 #
 tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort
 ```
 
 How many states had all interviewees living in a metropolitan area? Again, treat the District of Columbia as a state.
 ```{r}
-#Alaska、Wyoming 
+#Columbia、New Jersey、Rhode Island
 #
 tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort
 ```
 
 __§ 2.4__ Which region of the United States has the largest proportion of interviewees living in a non-metropolitan area?
 ```{r}
-#Northeast
+#Midwest .3479
 #
 tapply(is.na(A$MetroAreaCode), A$Region, mean) %>% sort
 
@@ -163,14 +163,14 @@ tapply(is.na(A$MetroAreaCode), A$Region, mean) %>% sort
 
 __§ 2.5__ Which state has a proportion of interviewees living in a non-metropolitan area closest to 30%?
 ```{r}
-#Florida
+#Wisconsin .2993
 #
 tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort
 ```
 
 Which state has the largest proportion of non-metropolitan interviewees, ignoring states where all interviewees were non-metropolitan?
 ```{r}
-#California
+#Montana .8361
 #
 tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort
 ```
@@ -196,7 +196,7 @@ nrow(CountryMap)
 __§ 3.2__ What is the name of the variable that was added to the data frame by the merge() operation?
 
 ```{r}
-#MetroAreaCode
+#MetroArea
 #
 A = merge(A, MetroAreaMap, by.x="MetroAreaCode", by.y="Code", all.x=TRUE)
 ```
@@ -247,7 +247,7 @@ tapply(A$Education=='No high school diploma', A$MetroArea, mean, na.rm=T) %>%
 
 __§ 4.1__ What is the name of the variable added to the CPS data frame by this merge operation?
 ```{r}
-#CountryOfBirthCode
+#CountryOfBirth
 #
 A = merge(A, CountryMap, by.x="CountryOfBirthCode", by.y="Code", all.x=TRUE)
 ```
@@ -270,7 +270,7 @@ table(A$Country) %>% sort %>% tail(10)
 
 __§ 4.3__ What proportion of the interviewees from the "New York-Northern New Jersey-Long Island, NY-NJ-PA" metropolitan area have a country of birth that is not the United States? 
 ```{r}
-#.6913
+#.3087
 #
 table(A$Country[A$MetroArea=="New York-Northern New Jersey-Long Island, NY-NJ-PA"] == 
   "United States") %>% prop.table

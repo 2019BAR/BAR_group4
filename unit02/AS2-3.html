@@ -440,7 +440,7 @@ summary {
 
 <h1 class="title toc-ignore">AS2-3: 美國的人口統計和就業資料</h1>
 <h4 class="author">第 4 組</h4>
-<h4 class="date">2019-09-30 19:31:54</h4>
+<h4 class="date">2019-10-02 13:15:23</h4>
 
 </div>
 
@@ -632,7 +632,7 @@ Agriculture, forestry, fishing, and hunting                                 Info
 <pre><code>     Citizen, Native Citizen, Naturalized          Non-Citizen 
              0.21162              0.02305              0.06482 </code></pre>
 <p><strong>§ 2.3</strong> How many states had all interviewees living in a non-metropolitan area (aka they have a missing MetroAreaCode value)? For this question, treat the District of Columbia as a state (even though it is not technically a state).</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">#Columbia、New Jersey、Rhode Island</span></a>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">#Alaska、Wyoming </span></a>
 <a class="sourceLine" id="cb24-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb24-3" title="3"><span class="kw">tapply</span>(<span class="kw">is.na</span>(A<span class="op">$</span>MetroAreaCode), A<span class="op">$</span>State, mean) <span class="op">%&gt;%</span><span class="st"> </span>sort</a></code></pre></div>
 <pre><code>District of Columbia           New Jersey         Rhode Island           California 
@@ -662,7 +662,7 @@ Agriculture, forestry, fishing, and hunting                                 Info
              Montana               Alaska              Wyoming 
              0.83608              1.00000              1.00000 </code></pre>
 <p>How many states had all interviewees living in a metropolitan area? Again, treat the District of Columbia as a state.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co">#Alaska、Wyoming </span></a>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co">#Columbia、New Jersey、Rhode Island</span></a>
 <a class="sourceLine" id="cb26-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb26-3" title="3"><span class="kw">tapply</span>(<span class="kw">is.na</span>(A<span class="op">$</span>MetroAreaCode), A<span class="op">$</span>State, mean) <span class="op">%&gt;%</span><span class="st"> </span>sort</a></code></pre></div>
 <pre><code>District of Columbia           New Jersey         Rhode Island           California 
@@ -692,13 +692,13 @@ Agriculture, forestry, fishing, and hunting                                 Info
              Montana               Alaska              Wyoming 
              0.83608              1.00000              1.00000 </code></pre>
 <p><strong>§ 2.4</strong> Which region of the United States has the largest proportion of interviewees living in a non-metropolitan area?</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co">#Northeast</span></a>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co">#Midwest .3479</span></a>
 <a class="sourceLine" id="cb28-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb28-3" title="3"><span class="kw">tapply</span>(<span class="kw">is.na</span>(A<span class="op">$</span>MetroAreaCode), A<span class="op">$</span>Region, mean) <span class="op">%&gt;%</span><span class="st"> </span>sort</a></code></pre></div>
 <pre><code>Northeast     South      West   Midwest 
    0.2162    0.2378    0.2437    0.3479 </code></pre>
 <p><strong>§ 2.5</strong> Which state has a proportion of interviewees living in a non-metropolitan area closest to 30%?</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co">#Florida</span></a>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co">#Wisconsin .2993</span></a>
 <a class="sourceLine" id="cb30-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb30-3" title="3"><span class="kw">tapply</span>(<span class="kw">is.na</span>(A<span class="op">$</span>MetroAreaCode), A<span class="op">$</span>State, mean) <span class="op">%&gt;%</span><span class="st"> </span>sort</a></code></pre></div>
 <pre><code>District of Columbia           New Jersey         Rhode Island           California 
@@ -728,7 +728,7 @@ Agriculture, forestry, fishing, and hunting                                 Info
              Montana               Alaska              Wyoming 
              0.83608              1.00000              1.00000 </code></pre>
 <p>Which state has the largest proportion of non-metropolitan interviewees, ignoring states where all interviewees were non-metropolitan?</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co">#California</span></a>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co">#Montana .8361</span></a>
 <a class="sourceLine" id="cb32-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb32-3" title="3"><span class="kw">tapply</span>(<span class="kw">is.na</span>(A<span class="op">$</span>MetroAreaCode), A<span class="op">$</span>State, mean) <span class="op">%&gt;%</span><span class="st"> </span>sort</a></code></pre></div>
 <pre><code>District of Columbia           New Jersey         Rhode Island           California 
@@ -772,7 +772,7 @@ Agriculture, forestry, fishing, and hunting                                 Info
 <a class="sourceLine" id="cb36-3" title="3"><span class="kw">nrow</span>(CountryMap)</a></code></pre></div>
 <pre><code>[1] 149</code></pre>
 <p><strong>§ 3.2</strong> What is the name of the variable that was added to the data frame by the merge() operation?</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="co">#MetroAreaCode</span></a>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="co">#MetroArea</span></a>
 <a class="sourceLine" id="cb38-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb38-3" title="3">A =<span class="st"> </span><span class="kw">merge</span>(A, MetroAreaMap, <span class="dt">by.x=</span><span class="st">&quot;MetroAreaCode&quot;</span>, <span class="dt">by.y=</span><span class="st">&quot;Code&quot;</span>, <span class="dt">all.x=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 <p>How many interviewees have a missing value for the new metropolitan area variable?</p>
@@ -833,7 +833,7 @@ New York-Northern New Jersey-Long Island, NY-NJ-PA
 <div id="section-4-integrating-country-of-birth-data" class="section level3">
 <h3>Section-4 Integrating Country of Birth Data</h3>
 <p><strong>§ 4.1</strong> What is the name of the variable added to the CPS data frame by this merge operation?</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="co">#CountryOfBirthCode</span></a>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="co">#CountryOfBirth</span></a>
 <a class="sourceLine" id="cb51-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb51-3" title="3">A =<span class="st"> </span><span class="kw">merge</span>(A, CountryMap, <span class="dt">by.x=</span><span class="st">&quot;CountryOfBirthCode&quot;</span>, <span class="dt">by.y=</span><span class="st">&quot;Code&quot;</span>, <span class="dt">all.x=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 <p>How many interviewees have a missing value for the new <code>Country</code> variable?</p>
@@ -851,7 +851,7 @@ New York-Northern New Jersey-Long Island, NY-NJ-PA
         India   Philippines        Mexico United States 
           770           839          3921        115063 </code></pre>
 <p><strong>§ 4.3</strong> What proportion of the interviewees from the “New York-Northern New Jersey-Long Island, NY-NJ-PA” metropolitan area have a country of birth that is not the United States?</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="co">#.6913</span></a>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="co">#.3087</span></a>
 <a class="sourceLine" id="cb56-2" title="2"><span class="co">#</span></a>
 <a class="sourceLine" id="cb56-3" title="3"><span class="kw">table</span>(A<span class="op">$</span>Country[A<span class="op">$</span>MetroArea<span class="op">==</span><span class="st">&quot;New York-Northern New Jersey-Long Island, NY-NJ-PA&quot;</span>] <span class="op">==</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb56-4" title="4"><span class="st">  &quot;United States&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>prop.table</a></code></pre></div>
