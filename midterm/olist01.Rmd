@@ -1,0 +1,119 @@
+---
+title: "期中專案地圖分析"
+author: "中山大學資管系 戴欣鈺"
+date: "`r Sys.time()`"
+output:
+  pdf_document: default
+  html_document:
+    css: ../style.css
+    highlight: pygments
+    theme: flatly
+---
+
+```{r results='hide', message=FALSE, warning=FALSE, echo=F}
+# 這些程式碼設定網頁的格式，並安裝、載入一些基本的套件，請大家不要去改動<br>
+rm(list=ls(all=T))
+knitr::opts_chunk$set(comment = NA)
+knitr::opts_knit$set(global.par = TRUE)
+par(cex=0.8)
+options(scipen=20, digits=5, width=80)
+if(!require(pacman)) install.packages("pacman")
+```
+<br>
+
+### 【A】讀進資料
+```{r results='hide', message=FALSE, warning=FALSE}
+pacman::p_load(dplyr, ggplot2, readr,maps)
+```
+
+```{r}
+# G= read_csv("data/olist_geolocation_dataset.csv")
+# R = read_csv("data/olist_order_reviews_dataset.csv")
+# L = read_csv("data/olist_marketing_qualified_leads_dataset.csv")
+# Q = read_csv("data/olist_closed_deals_dataset.csv")
+# I = read_csv("data/olist_order_items_dataset.csv")
+# C = read_csv("data/olist_customers_dataset.csv")
+# O = read_csv("data/olist_orders_dataset.csv")
+# P = read_csv("data/olist_products_dataset.csv")
+# S = read_csv("data/olist_sellers_dataset.csv")
+# TPC = read_csv("data/product_category_name_translation.csv")
+# 
+# attr(R, "spec") = NULL
+# attr(L, "spec") = NULL
+# attr(Q, "spec") = NULL
+# attr(I, "spec") = NULL
+# attr(C, "spec") = NULL
+# attr(O, "spec") = NULL
+# attr(P, "spec") = NULL
+# attr(S, "spec") = NULL
+# attr(TPC, "spec") = NULL
+# 
+# save(R,L,Q,I,C,O,P,S,TPC,G, file="data/olist.rdata")
+```
+
+```{r}
+rm(list=ls(all=T))
+load("data/olist.rdata")
+```
+
+
+```{r}
+G = G[G$geolocation_lat <= 5.27438888,]
+#it’s most Western spot is at 73 deg, 58′ 58.19″W Long.
+G = G[G$geolocation_lng >= -73.98283055,]
+#It’s most southern spot is at 33 deg, 45′ 04.21″ S Latitude.
+G = G[G$geolocation_lat >= -33.75116944,]
+#It’s most Eastern spot is 34 deg, 47′ 35.33″ W Long.
+G = G[G$geolocation_lng <=  -34.79314722,]
+
+# 巴西地圖底
+Brazil = map_data("world") %>% filter(region=="Brazil")
+bm = ggplot() + geom_polygon(data = Brazil, aes(x=long, y = lat, group = group), fill="aliceblue");bm
+
+```
+
+<br><hr>
+```{r}
+IS <- left_join(I,S, by="seller_id")
+OC <- left_join(O,C, by = "customer_id")
+BAA <- OC %>% left_join(.,IS,by="order_id") %>% left_join(.,P, by = "product_id") 
+sl <- G %>% group_by(geolocation_city) %>% summarise(s_lat = max(geolocation_lat),s_lng=max(geolocation_lng))
+cl <- G %>% group_by(geolocation_city) %>% summarise(c_lat = max(geolocation_lat),c_lng=max(geolocation_lng))
+
+# clean
+sl = sl[sl$s_lat <= 5.27438888,];sl = sl[sl$s_lng >= -73.98283055,]
+sl = sl[sl$s_lat >= -33.75116944,];sl = sl[sl$s_lng <=  -34.79314722,]
+
+cl = cl[cl$c_lat <= 5.27438888,];cl = cl[cl$c_lng >= -73.98283055,]
+cl = cl[cl$c_lat >= -33.75116944,];cl = cl[cl$c_lng <=  -34.79314722,]
+
+# sc_loc <- c(sl$s_lat, sl$s_lng, cl$c_lat, cl$c_lng)
+```
+```{r}
+BAA <- BAA  %>%
+  left_join(.,sl,by=c('seller_city'='geolocation_city')) %>%
+  left_join(.,cl,by=c('customer_city'='geolocation_city'))
+```
+##### 九萬多買家的分佈
+```{r warning=FALSE} 
+bm + geom_point(data=BAA,aes(x=c_lng,y=c_lat,color=customer_state),size=0.1)
+```
+##### 賣家分佈
+```{r warning=FALSE}
+bm + geom_point(data=BAA,aes(x=s_lng,y=s_lat,color=seller_state),size=0.5)
+```
+
+```{r warning=FALSE}
+scc <- BAA %>%
+  group_by(s_lat,s_lng,c_lng,c_lat) %>%
+  summarise(count=n()) %>%
+  arrange(desc(count))
+scc <- scc[1:500,]
+bm +  
+  geom_point(data=scc, aes(x=c_lng, y=c_lat), col="red", size=0.5) +
+  geom_point(data=scc, aes(x=s_lng, y=s_lat), col="blue", size=0.1) +
+  geom_segment(data=scc, aes(x=s_lng, y=s_lat, xend=c_lng, yend=c_lat), col="black", size=.02)
+```
+
+
+<br>
